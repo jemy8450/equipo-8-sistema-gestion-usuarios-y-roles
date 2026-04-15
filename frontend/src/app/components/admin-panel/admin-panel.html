@@ -1,0 +1,103 @@
+<div style="max-width: 900px; margin: 30px auto; padding: 20px; font-family: sans-serif;">
+  
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h2 style="color: #2c3e50;">Panel de Administrador</h2>
+    <div>
+      <a routerLink="/perfil" 
+         style="padding: 8px 16px; background: #3498db; color: white; 
+                border-radius: 6px; text-decoration: none; margin-right: 10px;">
+        Mi Perfil
+      </a>
+      <button (click)="cerrarSesion()" 
+              style="padding: 8px 16px; background: #e74c3c; color: white; 
+                     border: none; border-radius: 6px; cursor: pointer;">
+        Cerrar Sesión
+      </button>
+    </div>
+  </div>
+
+  <!-- TABLA DE USUARIOS -->
+  <div *ngIf="!usuarioEditando">
+    <table style="width: 100%; border-collapse: collapse; background: white; 
+                  box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+      <thead>
+        <tr style="background: #2c3e50; color: white;">
+          <th style="padding: 12px; text-align: left;">Nombre</th>
+          <th style="padding: 12px; text-align: left;">Correo</th>
+          <th style="padding: 12px; text-align: left;">Rol</th>
+          <th style="padding: 12px; text-align: center;">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let usuario of usuarios" 
+            style="border-bottom: 1px solid #ecf0f1;">
+          <td style="padding: 12px;">{{ usuario.nombre }}</td>
+          <td style="padding: 12px;">{{ usuario.correo }}</td>
+          <td style="padding: 12px;">
+            <span [style.background]="usuario.rol === 'Admin' ? '#fadbd8' : 
+                                      usuario.rol === 'Editor' ? '#fef9e7' : '#e8f8f5'"
+                  [style.color]="usuario.rol === 'Admin' ? '#c0392b' : 
+                                 usuario.rol === 'Editor' ? '#d68910' : '#1e8449'"
+                  style="padding: 3px 10px; border-radius: 4px; font-size: 0.85em;">
+              {{ usuario.rol }}
+            </span>
+          </td>
+          <td style="padding: 12px; text-align: center;">
+            <button (click)="editarUsuario(usuario)" 
+                    style="padding: 6px 12px; background: #3498db; color: white; 
+                           border: none; border-radius: 4px; cursor: pointer; margin-right: 8px;">
+              Editar
+            </button>
+            <button (click)="eliminarUsuario(usuario._id)" 
+                    style="padding: 6px 12px; background: #e74c3c; color: white; 
+                           border: none; border-radius: 4px; cursor: pointer;">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- FORMULARIO DE EDICIÓN -->
+  <div *ngIf="usuarioEditando" 
+       style="background: white; padding: 25px; border-radius: 12px; 
+              box-shadow: 0 4px 8px rgba(0,0,0,0.1); max-width: 450px; margin: 0 auto;">
+    
+    <h3 style="color: #2c3e50; margin-bottom: 20px;">Editando Usuario</h3>
+
+    <div style="margin-bottom: 15px;">
+      <label style="display: block; margin-bottom: 5px;">Nombre:</label>
+      <input type="text" [(ngModel)]="usuarioEditando.nombre" 
+             style="width: 95%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <label style="display: block; margin-bottom: 5px;">Correo:</label>
+      <input type="email" [(ngModel)]="usuarioEditando.correo" 
+             style="width: 95%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+    </div>
+
+    <div style="margin-bottom: 20px;">
+      <label style="display: block; margin-bottom: 5px;">Rol:</label>
+      <select [(ngModel)]="usuarioEditando.rol" 
+              style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+        <option value="Admin">Admin</option>
+        <option value="Editor">Editor</option>
+        <option value="Viewer">Viewer</option>
+      </select>
+    </div>
+
+    <button (click)="guardarCambios()" 
+            style="width: 100%; padding: 10px; background: #27ae60; color: white; 
+                   border: none; border-radius: 6px; cursor: pointer; margin-bottom: 10px;">
+      Guardar Cambios
+    </button>
+
+    <button (click)="cancelarEdicion()" 
+            style="width: 100%; padding: 10px; background: #95a5a6; color: white; 
+                   border: none; border-radius: 6px; cursor: pointer;">
+      Cancelar
+    </button>
+  </div>
+</div>

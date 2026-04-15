@@ -1,0 +1,43 @@
+<div class="registro-container" style="max-width: 400px; margin: 50px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; font-family: sans-serif;">
+  <h2 style="text-align: center; color: #333;">Crear Nueva Cuenta</h2>
+  <p style="text-align: center; font-size: 0.9em; color: #666;">Únete al Equipo 8</p>
+
+  <form (ngSubmit)="ejecutarRegistro()" #registroForm="ngForm">
+    <div style="margin-bottom: 15px;">
+      <label>Nombre Completo:</label>
+      <input type="text" name="nombre" [(ngModel)]="nuevoUsuario.nombre" required 
+             style="width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px;">
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <label>Correo Electrónico:</label>
+      <input type="email" name="correo" [(ngModel)]="nuevoUsuario.correo" required 
+             style="width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px;">
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <label>Contraseña:</label>
+      <input type="password" name="password" [(ngModel)]="nuevoUsuario.password" required 
+             style="width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px;">
+    </div>
+
+    <div style="margin-bottom: 20px;">
+      <label>Rol solicitado:</label>
+      <select name="rol" [(ngModel)]="nuevoUsuario.rol" 
+              style="width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px;">
+        <option value="Viewer">Viewer (Solo lectura)</option>
+        <option value="Editor">Editor (Puede modificar)</option>
+        <option value="Admin">Admin (Control total)</option>
+      </select>
+    </div>
+
+    <button type="submit" [disabled]="!registroForm.form.valid" 
+            style="width: 100%; padding: 12px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">
+      Registrarse
+    </button>
+  </form>
+
+  <p style="text-align: center; margin-top: 20px;">
+    ¿Ya tienes cuenta? <a routerLink="/login" style="color: #007bff; text-decoration: none;">Inicia sesión aquí</a>
+  </p>
+</div>

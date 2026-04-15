@@ -1,0 +1,30 @@
+<div class="login-container">
+  <h2>Iniciar Sesión</h2>
+
+  <div *ngIf="mensajeError" class="alerta-error">
+    {{ mensajeError }}
+  </div>
+
+  <form (ngSubmit)="iniciarSesion()">
+    <div class="form-grupo">
+      <label>Correo Electrónico:</label>
+      <input type="email" name="correo" 
+             [(ngModel)]="credenciales.correo" required>
+    </div>
+
+    <div class="form-grupo">
+      <label>Contraseña:</label>
+      <input type="password" name="password" 
+             [(ngModel)]="credenciales.password" required>
+    </div>
+
+    <button type="submit">Entrar al Sistema</button>
+  </form>
+
+  <p style="text-align: center; margin-top: 20px;">
+    ¿No tienes cuenta? 
+    <a routerLink="/registro" style="color: #007bff;">
+      Regístrate aquí
+    </a>
+  </p>
+</div>

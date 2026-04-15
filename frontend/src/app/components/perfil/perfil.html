@@ -1,0 +1,64 @@
+<div class="perfil-card" style="max-width: 450px; margin: 40px auto; padding: 25px; 
+     box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 12px; background: white;">
+  
+  <h2 style="color: #2c3e50; text-align: center;">Mi Perfil</h2>
+  <hr style="opacity: 0.2; margin-bottom: 20px;">
+
+  <div *ngIf="!editando">
+    <p><strong>👤 Nombre:</strong> {{ usuario.nombre }}</p>
+    <p><strong>📧 Correo:</strong> {{ usuario.correo }}</p>
+    <p><strong>🛡️ Rol:</strong> 
+      <span style="background: #e1f5fe; color: #0288d1; 
+                   padding: 2px 8px; border-radius: 4px; font-size: 0.9em;">
+        {{ usuario.rol }}
+      </span>
+    </p>
+
+    <button (click)="editando = true" 
+            style="width: 100%; margin-top: 20px; padding: 10px; 
+                   background: #3498db; color: white; border: none; 
+                   border-radius: 6px; cursor: pointer;">
+      Editar Perfil
+    </button>
+
+    <a *ngIf="usuario.rol === 'Admin'" routerLink="/admin"
+       style="display: block; width: 100%; margin-top: 10px; padding: 10px; 
+              background: #8e44ad; color: white; border: none; border-radius: 6px; 
+              cursor: pointer; text-align: center; text-decoration: none;">
+      Panel de Administrador
+    </a>
+
+    <button (click)="cerrarSesion()" 
+            style="width: 100%; margin-top: 10px; padding: 10px; 
+                   background: #e74c3c; color: white; border: none; 
+                   border-radius: 6px; cursor: pointer;">
+      Cerrar Sesión
+    </button>
+  </div>
+
+  <div *ngIf="editando">
+    <div style="margin-bottom: 15px;">
+      <label style="display: block; margin-bottom: 5px;">Nuevo Nombre:</label>
+      <input type="text" [(ngModel)]="usuario.nombre" 
+             style="width: 95%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <label style="display: block; margin-bottom: 5px;">Nuevo Correo:</label>
+      <input type="email" [(ngModel)]="usuario.correo" 
+             style="width: 95%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+    </div>
+
+    <button (click)="guardar()" 
+            style="width: 100%; padding: 10px; background: #27ae60; color: white; 
+                   border: none; border-radius: 6px; cursor: pointer; margin-bottom: 10px;">
+      Confirmar Cambios
+    </button>
+
+    <button (click)="editando = false" 
+            style="width: 100%; padding: 10px; background: #95a5a6; color: white; 
+                   border: none; border-radius: 6px; cursor: pointer;">
+      Cancelar
+    </button>
+  </div>
+</div>
