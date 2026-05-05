@@ -108,3 +108,18 @@ exports.actualizarMiPerfil = async (req, res) => {
         res.status(500).json({ msg: 'Hubo un error al actualizar tu perfil' });
     }
 };
+// 6. OBTENER UN USUARIO POR SU ID (para consultas específicas)
+exports.obtenerUsuarioPorId = async (req, res) => {
+    try {
+        const usuario = await Usuario.findById(req.params.id).select('-password');
+        
+        if (!usuario) {
+            return res.status(404).json({ msg: 'Usuario no encontrado' });
+        }
+
+        res.json(usuario);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ msg: 'Hubo un error al obtener el usuario' });
+    }
+};

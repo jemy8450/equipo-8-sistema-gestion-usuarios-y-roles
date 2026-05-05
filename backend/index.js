@@ -9,6 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 // Conexión a MongoDB
+mongoose.set('strictQuery', false);
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('✅ Conexión exitosa a la Base de Datos (MongoDB Atlas)'))
   .catch((error) => console.error('❌ Error conectando a MongoDB:', error));

@@ -1,1 +1,3 @@
 # Sistema de Gestión de Usuarios y Roles - Equipo 8
+
+# En esta sesion se realizo un cambio muy importante del cual no nos habiamos percatado el cual es el siguiente: al momento de registrarse los usuarios podian crear su cuenta eligiendo su rol admin, editor o viewer, por lo cual no tenia sentido tener un usuario como administrador principal si de por si cualquiera podia serlo, entonces eliminamos este campo del registro si aun no se tenia una cuenta por lo cual ahora se agrego que siempre al registrarse los usuarios unicamente pueden ser viewers por defecto y solamente el usuario admin puede cambiar su rol.

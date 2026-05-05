@@ -16,8 +16,7 @@ export class RegistroComponent {
   nuevoUsuario = {
     nombre: '',
     correo: '',
-    password: '',
-    rol: 'Viewer'
+    password: ''
   };
 
   constructor(private authService: AuthService, private router: Router) {}

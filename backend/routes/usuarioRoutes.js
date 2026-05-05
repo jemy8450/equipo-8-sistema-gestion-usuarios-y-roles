@@ -19,5 +19,7 @@ router.put('/perfil', verificarToken, usuarioController.actualizarMiPerfil);
 router.get('/', verificarToken, esAdmin, usuarioController.obtenerUsuarios);
 router.put('/:id', verificarToken, esAdmin, usuarioController.actualizarUsuario);
 router.delete('/:id', verificarToken, esAdmin, usuarioController.eliminarUsuario);
+// GET usuario por ID: http://localhost:3000/api/usuarios/:id
+router.get('/:id', verificarToken, esAdmin, usuarioController.obtenerUsuarioPorId);
 
 module.exports = router;
