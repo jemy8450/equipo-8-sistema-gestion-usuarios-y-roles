@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://PENDIENTE.onrender.com/api'
+  apiUrl: 'https://equipo8-backend.onrender.com/api'
 };
