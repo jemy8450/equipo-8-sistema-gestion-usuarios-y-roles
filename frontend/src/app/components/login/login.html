@@ -1,30 +1,73 @@
-<div class="login-container">
-  <h2>Iniciar Sesión</h2>
+<div class="min-vh-100 d-flex align-items-center justify-content-center" 
+     style="background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);">
+  
+  <div class="card border-0 p-4" 
+       style="width: 100%; max-width: 420px; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.2);">
+    
+    <!-- Logo / Icono -->
+    <div class="text-center mb-4">
+      <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3"
+           style="width: 70px; height: 70px; background: linear-gradient(135deg, #4f46e5, #7c3aed);">
+        <i class="bi bi-shield-lock-fill text-white" style="font-size: 1.8rem;"></i>
+      </div>
+      <h4 class="fw-bold mb-1" style="color: #1e293b;">Bienvenido</h4>
+      <p class="text-muted small">Inicia sesión en tu cuenta</p>
+    </div>
 
-  <div *ngIf="mensajeError" class="alerta-error">
-    {{ mensajeError }}
+    <!-- Alerta de error -->
+    <div *ngIf="mensajeError" 
+         class="alert alert-danger d-flex align-items-center gap-2 py-2" 
+         role="alert">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <small>{{ mensajeError }}</small>
+    </div>
+
+    <!-- Formulario -->
+    <form (ngSubmit)="iniciarSesion()">
+      
+      <div class="mb-3">
+        <label class="form-label fw-semibold small text-secondary">
+          <i class="bi bi-envelope me-1"></i>Correo Electrónico
+        </label>
+        <input type="email" 
+               name="correo" 
+               [(ngModel)]="credenciales.correo" 
+               required
+               class="form-control form-control-lg"
+               style="border-radius: 10px; border: 1.5px solid #e2e8f0;"
+               placeholder="correo@ejemplo.com">
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label fw-semibold small text-secondary">
+          <i class="bi bi-lock me-1"></i>Contraseña
+        </label>
+        <input type="password" 
+               name="password" 
+               [(ngModel)]="credenciales.password" 
+               required
+               class="form-control form-control-lg"
+               style="border-radius: 10px; border: 1.5px solid #e2e8f0;"
+               placeholder="••••••••">
+      </div>
+
+      <button type="submit" 
+              class="btn w-100 btn-lg fw-semibold text-white"
+              style="background: linear-gradient(135deg, #4f46e5, #7c3aed); 
+                     border: none; border-radius: 10px; padding: 12px;">
+        <i class="bi bi-box-arrow-in-right me-2"></i>Iniciar Sesión
+      </button>
+    </form>
+
+    <!-- Link registro -->
+    <p class="text-center mt-4 mb-0 small text-muted">
+      ¿No tienes cuenta? 
+      <a routerLink="/registro" 
+         class="fw-semibold text-decoration-none"
+         style="color: #4f46e5;">
+        Regístrate aquí
+      </a>
+    </p>
+
   </div>
-
-  <form (ngSubmit)="iniciarSesion()">
-    <div class="form-grupo">
-      <label>Correo Electrónico:</label>
-      <input type="email" name="correo" 
-             [(ngModel)]="credenciales.correo" required>
-    </div>
-
-    <div class="form-grupo">
-      <label>Contraseña:</label>
-      <input type="password" name="password" 
-             [(ngModel)]="credenciales.password" required>
-    </div>
-
-    <button type="submit">Entrar al Sistema</button>
-  </form>
-
-  <p style="text-align: center; margin-top: 20px;">
-    ¿No tienes cuenta? 
-    <a routerLink="/registro" style="color: #007bff;">
-      Regístrate aquí
-    </a>
-  </p>
 </div>

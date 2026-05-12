@@ -33,3 +33,11 @@ exports.esAdmin = (req, res, next) => {
     // Si es Admin, lo dejamos pasar
     next();
 };
+
+// GUARDIA 3: Verifica si el usuario es Admin o Editor
+exports.esAdminOEditor = (req, res, next) => {
+    if (req.usuario.rol !== 'Admin' && req.usuario.rol !== 'Editor') {
+        return res.status(403).json({ msg: 'Acceso denegado.' });
+    }
+    next();
+};

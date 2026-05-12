@@ -14,6 +14,7 @@ import { AuthService } from '../../services/auth';
 export class AdminPanelComponent implements OnInit {
   usuarios: any[] = [];
   usuarioEditando: any = null;
+  esAdmin: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -21,13 +22,13 @@ export class AdminPanelComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.esAdmin = this.authService.esAdmin();
     this.cargarUsuarios();
   }
 
   cargarUsuarios() {
     this.authService.obtenerUsuarios().subscribe({
       next: (res) => {
-        console.log('Usuarios recibidos:', res);
         this.usuarios = [...res];
         this.cdr.detectChanges();
       },
@@ -41,11 +42,14 @@ export class AdminPanelComponent implements OnInit {
   }
 
   guardarCambios() {
-    const datos = {
+    const datos: any = {
       nombre: this.usuarioEditando.nombre,
-      correo: this.usuarioEditando.correo,
-      rol: this.usuarioEditando.rol
+      correo: this.usuarioEditando.correo
     };
+
+    if (this.esAdmin) {
+      datos.rol = this.usuarioEditando.rol;
+    }
 
     this.authService.actualizarUsuario(this.usuarioEditando._id, datos).subscribe({
       next: () => {

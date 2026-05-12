@@ -2,7 +2,6 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth';
 
-// Guard para verificar si el usuario está autenticado
 export const authGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
   const router = inject(Router);
@@ -10,13 +9,10 @@ export const authGuard: CanActivateFn = () => {
   if (authService.estaAutenticado()) {
     return true;
   }
-
-  // Si no está autenticado, lo mandamos al login
   router.navigate(['/login']);
   return false;
 };
 
-// Guard para verificar si el usuario es Admin
 export const adminGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
   const router = inject(Router);
@@ -24,8 +20,18 @@ export const adminGuard: CanActivateFn = () => {
   if (authService.estaAutenticado() && authService.esAdmin()) {
     return true;
   }
+  router.navigate(['/perfil']);
+  return false;
+};
 
-  // Si no es Admin, lo mandamos al perfil
+export const editorGuard: CanActivateFn = () => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+
+  const rol = authService.obtenerRol();
+  if (authService.estaAutenticado() && (rol === 'Admin' || rol === 'Editor')) {
+    return true;
+  }
   router.navigate(['/perfil']);
   return false;
 };

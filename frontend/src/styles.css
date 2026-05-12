@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+/* Variables globales */
+:root {
+  --primary: #4f46e5;
+  --primary-dark: #4338ca;
+  --secondary: #6366f1;
+  --light-bg: #f8fafc;
+  --card-shadow: 0 4px 24px rgba(79, 70, 229, 0.08);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--light-bg);
+  font-family: 'Segoe UI', sans-serif;
+  color: #1e293b;
+}

@@ -1,103 +1,190 @@
-<div style="max-width: 900px; margin: 30px auto; padding: 20px; font-family: sans-serif;">
-  
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-    <h2 style="color: #2c3e50;">Panel de Administrador</h2>
-    <div>
-      <a routerLink="/perfil" 
-         style="padding: 8px 16px; background: #3498db; color: white; 
-                border-radius: 6px; text-decoration: none; margin-right: 10px;">
-        Mi Perfil
+<div style="background: #f8fafc; min-height: 100vh; padding: 30px 20px;">
+
+  <!-- Navbar superior -->
+  <div class="d-flex justify-content-between align-items-center mb-4 p-3 rounded-3"
+       style="background: white; box-shadow: 0 2px 12px rgba(79,70,229,0.08);">
+    <div class="d-flex align-items-center gap-2">
+      <div class="d-flex align-items-center justify-content-center rounded-circle"
+           style="width: 42px; height: 42px; background: linear-gradient(135deg, #4f46e5, #7c3aed);">
+        <i class="bi bi-speedometer2 text-white"></i>
+      </div>
+      <div>
+        <h5 class="fw-bold mb-0" style="color: #1e293b;">
+          {{ esAdmin ? 'Panel de Administrador' : 'Panel de Editor' }}
+        </h5>
+        <small class="text-muted">Gestión de usuarios del sistema</small>
+      </div>
+    </div>
+    <div class="d-flex gap-2">
+      <a routerLink="/perfil"
+         class="btn btn-sm fw-semibold"
+         style="background: #ede9fe; color: #6d28d9; border: none; border-radius: 8px; padding: 8px 16px;">
+        <i class="bi bi-person-fill me-1"></i>Mi Perfil
       </a>
-      <button (click)="cerrarSesion()" 
-              style="padding: 8px 16px; background: #e74c3c; color: white; 
-                     border: none; border-radius: 6px; cursor: pointer;">
-        Cerrar Sesión
+      <button (click)="cerrarSesion()"
+              class="btn btn-sm fw-semibold"
+              style="background: #fee2e2; color: #dc2626; border: none; border-radius: 8px; padding: 8px 16px;">
+        <i class="bi bi-box-arrow-right me-1"></i>Cerrar Sesión
       </button>
     </div>
   </div>
 
-  <!-- TABLA DE USUARIOS -->
-  <div *ngIf="!usuarioEditando">
-    <table style="width: 100%; border-collapse: collapse; background: white; 
-                  box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
-      <thead>
-        <tr style="background: #2c3e50; color: white;">
-          <th style="padding: 12px; text-align: left;">Nombre</th>
-          <th style="padding: 12px; text-align: left;">Correo</th>
-          <th style="padding: 12px; text-align: left;">Rol</th>
-          <th style="padding: 12px; text-align: center;">Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let usuario of usuarios" 
-            style="border-bottom: 1px solid #ecf0f1;">
-          <td style="padding: 12px;">{{ usuario.nombre }}</td>
-          <td style="padding: 12px;">{{ usuario.correo }}</td>
-          <td style="padding: 12px;">
-            <span [style.background]="usuario.rol === 'Admin' ? '#fadbd8' : 
-                                      usuario.rol === 'Editor' ? '#fef9e7' : '#e8f8f5'"
-                  [style.color]="usuario.rol === 'Admin' ? '#c0392b' : 
-                                 usuario.rol === 'Editor' ? '#d68910' : '#1e8449'"
-                  style="padding: 3px 10px; border-radius: 4px; font-size: 0.85em;">
-              {{ usuario.rol }}
-            </span>
-          </td>
-          <td style="padding: 12px; text-align: center;">
-            <button (click)="editarUsuario(usuario)" 
-                    style="padding: 6px 12px; background: #3498db; color: white; 
-                           border: none; border-radius: 4px; cursor: pointer; margin-right: 8px;">
-              Editar
-            </button>
-            <button (click)="eliminarUsuario(usuario._id)" 
-                    style="padding: 6px 12px; background: #e74c3c; color: white; 
-                           border: none; border-radius: 4px; cursor: pointer;">
-              Eliminar
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <!-- Tabla de usuarios -->
+  <div *ngIf="!usuarioEditando"
+       class="rounded-3 overflow-hidden"
+       style="background: white; box-shadow: 0 2px 12px rgba(79,70,229,0.08);">
+
+    <!-- Header tabla -->
+    <div class="p-3 d-flex align-items-center gap-2"
+         style="border-bottom: 1.5px solid #f1f5f9;">
+      <i class="bi bi-people-fill" style="color: #4f46e5;"></i>
+      <span class="fw-semibold" style="color: #1e293b;">Usuarios registrados</span>
+      <span class="badge rounded-pill ms-1"
+            style="background: #ede9fe; color: #6d28d9;">
+        {{ usuarios.length }}
+      </span>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-hover mb-0">
+        <thead style="background: #f8fafc;">
+          <tr>
+            <th class="py-3 px-4 fw-semibold small text-secondary border-0">Usuario</th>
+            <th class="py-3 px-4 fw-semibold small text-secondary border-0">Correo</th>
+            <th class="py-3 px-4 fw-semibold small text-secondary border-0">Rol</th>
+            <th class="py-3 px-4 fw-semibold small text-secondary border-0 text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let usuario of usuarios"
+              style="border-bottom: 1px solid #f8fafc;">
+
+            <td class="py-3 px-4">
+              <div class="d-flex align-items-center gap-2">
+                <div class="d-flex align-items-center justify-content-center rounded-circle"
+                     style="width: 36px; height: 36px; background: linear-gradient(135deg, #4f46e5, #7c3aed); flex-shrink: 0;">
+                  <span class="text-white fw-bold small">
+                    {{ usuario.nombre.charAt(0).toUpperCase() }}
+                  </span>
+                </div>
+                <span class="fw-semibold" style="color: #1e293b;">{{ usuario.nombre }}</span>
+              </div>
+            </td>
+
+            <td class="py-3 px-4 text-muted small align-middle">{{ usuario.correo }}</td>
+
+            <td class="py-3 px-4 align-middle">
+              <span class="badge px-3 py-2"
+                    [style.background]="usuario.rol === 'Admin' ? '#ede9fe' :
+                                       usuario.rol === 'Editor' ? '#fef3c7' : '#dcfce7'"
+                    [style.color]="usuario.rol === 'Admin' ? '#6d28d9' :
+                                   usuario.rol === 'Editor' ? '#d97706' : '#16a34a'">
+                {{ usuario.rol }}
+              </span>
+            </td>
+
+            <td class="py-3 px-4 text-center align-middle">
+              <button (click)="editarUsuario(usuario)"
+                      class="btn btn-sm me-2 fw-semibold"
+                      style="background: #ede9fe; color: #6d28d9; border: none; border-radius: 8px;">
+                <i class="bi bi-pencil-fill me-1"></i>Editar
+              </button>
+              <button *ngIf="esAdmin"
+                      (click)="eliminarUsuario(usuario._id)"
+                      class="btn btn-sm fw-semibold"
+                      style="background: #fee2e2; color: #dc2626; border: none; border-radius: 8px;">
+                <i class="bi bi-trash-fill me-1"></i>Eliminar
+              </button>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
-  <!-- FORMULARIO DE EDICIÓN -->
-  <div *ngIf="usuarioEditando" 
-       style="background: white; padding: 25px; border-radius: 12px; 
-              box-shadow: 0 4px 8px rgba(0,0,0,0.1); max-width: 450px; margin: 0 auto;">
-    
-    <h3 style="color: #2c3e50; margin-bottom: 20px;">Editando Usuario</h3>
+  <!-- Formulario edición -->
+  <div *ngIf="usuarioEditando" class="mx-auto" style="max-width: 480px;">
 
-    <div style="margin-bottom: 15px;">
-      <label style="display: block; margin-bottom: 5px;">Nombre:</label>
-      <input type="text" [(ngModel)]="usuarioEditando.nombre" 
-             style="width: 95%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+    <div class="card border-0 p-4"
+         style="border-radius: 20px; box-shadow: 0 4px 24px rgba(79,70,229,0.10);">
+
+      <div class="text-center mb-4">
+        <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3"
+             style="width: 60px; height: 60px; background: linear-gradient(135deg, #4f46e5, #7c3aed);">
+          <i class="bi bi-pencil-fill text-white" style="font-size: 1.3rem;"></i>
+        </div>
+        <h5 class="fw-bold mb-0" style="color: #1e293b;">Editando Usuario</h5>
+        <small class="text-muted">{{ usuarioEditando.correo }}</small>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label fw-semibold small text-secondary">
+          <i class="bi bi-person me-1"></i>Nombre
+        </label>
+        <input type="text"
+               [(ngModel)]="usuarioEditando.nombre"
+               class="form-control form-control-lg"
+               style="border-radius: 10px; border: 1.5px solid #e2e8f0;">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label fw-semibold small text-secondary">
+          <i class="bi bi-envelope me-1"></i>Correo
+        </label>
+        <input type="email"
+               [(ngModel)]="usuarioEditando.correo"
+               class="form-control form-control-lg"
+               style="border-radius: 10px; border: 1.5px solid #e2e8f0;">
+      </div>
+
+      <!-- Solo Admin puede cambiar el rol -->
+      <div class="mb-4" *ngIf="esAdmin">
+        <label class="form-label fw-semibold small text-secondary">
+          <i class="bi bi-shield-check me-1"></i>Rol
+        </label>
+        <select [(ngModel)]="usuarioEditando.rol"
+                class="form-select form-select-lg"
+                style="border-radius: 10px; border: 1.5px solid #e2e8f0;">
+          <option value="Admin">Admin</option>
+          <option value="Editor">Editor</option>
+          <option value="Viewer">Viewer</option>
+        </select>
+      </div>
+
+      <!-- Rol solo lectura para Editor -->
+      <div class="mb-4" *ngIf="!esAdmin">
+        <label class="form-label fw-semibold small text-secondary">
+          <i class="bi bi-shield-check me-1"></i>Rol
+        </label>
+        <div class="p-3 rounded-3"
+             style="background: #f8fafc; border: 1.5px solid #e2e8f0;">
+          <span class="badge px-3 py-2"
+                [style.background]="usuarioEditando.rol === 'Admin' ? '#ede9fe' :
+                                   usuarioEditando.rol === 'Editor' ? '#fef3c7' : '#dcfce7'"
+                [style.color]="usuarioEditando.rol === 'Admin' ? '#6d28d9' :
+                               usuarioEditando.rol === 'Editor' ? '#d97706' : '#16a34a'">
+            {{ usuarioEditando.rol }}
+          </span>
+          <small class="text-muted ms-2">No tienes permisos para cambiar el rol</small>
+        </div>
+      </div>
+
+      <button (click)="guardarCambios()"
+              class="btn w-100 btn-lg fw-semibold text-white mb-2"
+              style="background: linear-gradient(135deg, #059669, #10b981);
+                     border: none; border-radius: 10px; padding: 12px;">
+        <i class="bi bi-check-circle-fill me-2"></i>Guardar Cambios
+      </button>
+
+      <button (click)="cancelarEdicion()"
+              class="btn w-100 btn-lg fw-semibold"
+              style="background: #f1f5f9; color: #64748b;
+                     border: none; border-radius: 10px; padding: 12px;">
+        <i class="bi bi-x-circle me-2"></i>Cancelar
+      </button>
+
     </div>
-
-    <div style="margin-bottom: 15px;">
-      <label style="display: block; margin-bottom: 5px;">Correo:</label>
-      <input type="email" [(ngModel)]="usuarioEditando.correo" 
-             style="width: 95%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
-    </div>
-
-    <div style="margin-bottom: 20px;">
-      <label style="display: block; margin-bottom: 5px;">Rol:</label>
-      <select [(ngModel)]="usuarioEditando.rol" 
-              style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
-        <option value="Admin">Admin</option>
-        <option value="Editor">Editor</option>
-        <option value="Viewer">Viewer</option>
-      </select>
-    </div>
-
-    <button (click)="guardarCambios()" 
-            style="width: 100%; padding: 10px; background: #27ae60; color: white; 
-                   border: none; border-radius: 6px; cursor: pointer; margin-bottom: 10px;">
-      Guardar Cambios
-    </button>
-
-    <button (click)="cancelarEdicion()" 
-            style="width: 100%; padding: 10px; background: #95a5a6; color: white; 
-                   border: none; border-radius: 6px; cursor: pointer;">
-      Cancelar
-    </button>
   </div>
+
 </div>
